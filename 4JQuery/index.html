@@ -1,0 +1,213 @@
+<!doctype html>
+<html>
+    <head>
+        <title>JQuery Code player</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="A journey of a thousand miles begins with a small step"/>
+        
+        <script type="text/javascript" src="/Users/jie/webdevcourse/jquery.min.js">
+            
+            //<script type="text/javascript" src="http://code.jquery.com/jquery-latest.in.js">
+        </script>
+        
+        <style type="text/css">
+            * {
+                margin:0;
+                padding:0;
+                font-family:"HelveticaNeue-Light", Arial, Helvetica, sans-serif;
+                font-weight:300;
+               
+            }
+        
+        body, html{
+            height: 100%;
+            width:100%;
+        
+        }
+            #menu{
+                width:100%;
+                height:40px;
+                background-color:#fcf4f4;
+                               
+            }
+        #logo{
+            padding:5px 0 0 20px;
+            font-weight:bold;
+            font-size:120%;
+            float:left;
+        }
+        
+        #rundiv{
+            float:right;
+            padding:5px 10px 0 0;
+            
+        }
+        
+        #runbutton{
+            font-size: 120%;
+        }
+        #selection{
+            
+            margin: 0 auto;
+            width:280px;
+            padding-bottom: 3px;
+
+        }
+        #selection ul{
+          
+            height:30px;
+        
+        }
+        #selection li{
+            list-style:none;
+            float:left;
+            border: 1px solid grey;
+            height: 20px;
+            padding: 5px 10px;
+                    }
+        .selected{
+            background-color: grey;
+        }
+        .clear{
+            clear:both;
+        
+        }
+        .codeContainer{
+           
+            height:100%;
+            width:50%;
+            position:relative;
+            float:left;
+            border: none;
+           
+        
+        }
+        .codeContainer textarea{
+            width:100%;
+            height:100%;
+          
+            font-family: montype;
+            
+            box-sizing: border-box;
+        }
+        .codeLabel{
+            position:absolute;
+            right:10px;
+            top:10px;
+        
+        }
+        #resultContainer{
+            float:right;
+        }
+        
+        #cssContainer, #jsContainer{
+            display:none;
+        }
+        
+        iframe{
+            height:100%;
+            width:50%;
+            border:none;
+            
+        }
+       
+        </style>
+  
+        </head>
+    
+    <body>
+    <div id="wrapper">
+       <div id="menu">
+           <div id="logo">
+         CodePlayer
+          </div>
+           <div id="rundiv">
+               <button id="runbutton">Run</button>
+           </div>
+         <div id="selection">
+         <ul><li name="html" class="selector selected">HTML</li>
+         <li name="css" class="selector">CSS</li>
+         <li name="js" class="selector">JS</li>
+         <li name="result" class="selector selected">Result</li>
+         </ul>
+         </div>
+        </div>
+  
+    
+       <div class="clear"></div>
+       
+       <div class="codeContainer" id="htmlContainer">
+           <textarea id="html"><div>Hello world!</div></textarea>
+           <div class="codeLabel">HTML</div>
+         
+       </div>
+       
+       <div class="codeContainer" id="cssContainer">
+           <textarea id="css">div {
+               background-color: blue;
+               }</textarea>
+           <div class="codeLabel">CSS</div>
+           
+       </div>
+       
+       <div class="codeContainer" id="jsContainer">
+           <textarea id="js">test</textarea>
+           <div class="codeLabel">JS</div>
+           
+       </div>
+       
+       <div class="codeContainer" id="resultContainer">
+           <iframe></iframe>
+           
+           
+       </div>
+       </div>
+       
+        <script>
+            
+           /*small code to test if JQuery is available
+            
+            if(typeof jQuery != "undefined"){
+                alert('JQuery installed!');
+            }
+        else {
+        
+            alert("JQuery not installed!");
+        } */
+        //set height of codeContainer
+        var windowHeight = $(window).height();
+        var menuHeight = $("#menu").height();
+        var codecontainerHeight = windowHeight- menuHeight;
+        $(".codeContainer").height(codecontainerHeight+"px");
+        
+        //click on selection buttons
+        $(".selector").click(function(){
+                             $(this).toggleClass("selected");
+                             var activeDiv = $(this).html().toLowerCase();
+                             $("#"+activeDiv+"Container").toggle();
+                             
+                             var showingDivs=$(".codeContainer").filter(function(){
+                                                                        
+                                return($(this).css("display") != "none");
+                             }).length;
+                           
+                             var width=100/showingDivs;
+                             $(".codeContainer").css("width", width+"%");
+
+                             });
+                             
+        //click on run button, result will shown
+        $("#runbutton").click(function(){
+                             
+                              $("iframe").contents().find("html").html('<style>'+$("#css").val()+'</style>'+$("#html").val());
+                                                    
+                                                    });
+                              
+       
+        </script>
+    
+    
+    </body>
+</html>
