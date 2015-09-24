@@ -62,7 +62,12 @@ document.getElementById("simpleBox").onclick = function(){
     reactionTime = (clickedTime - createdTime)/1000;
     document.getElementById("time").innerHTML=reactionTime;
     this.style.display="none";
-    makeBox();
+    if(start==true){
+       makeBox();
+    }
+    else{
+       document.getElementById("simpleBox").style.display="none";
+    }
     
 }
 
